@@ -107,10 +107,14 @@
 				scene.controls.update();
 				scene.renderer.render( scene, scene.children[ scene.cam ] );
 			}
-			function animationItem(currentFrame, item, property, endV, endFrame, delayFrame, ease=easeInOutQuad, endAction=null){
+			function animationItem(currentFrame, item, property, endV, endSeconds, delayFrame, ease=easeInOutQuad, endAction=null){
+				let currFrame = scene.raf.currFrame;
+				let endFrame = endSeconds * scene.raf.fps;
+
 				let startV = item[property];
 				let deltaV = endV - startV;
-				return [ currentFrame, endFrame + delayFrame, item, property, ease, startV, deltaV, endV, endAction ]
+				
+				return [ currFrame, endFrame + delayFrame, item, property, ease, startV, deltaV, endV, endAction ]
 			}
 			function easeInOutQuad(t, b, c, d) {
 				if ((t /= d / 2) < 1) return c / 2 * t * t + b;
